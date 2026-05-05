@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import * as Lucide from 'lucide-react';
+import { 
+  BarChart3, 
+  Users, 
+  BookOpen, 
+  Settings, 
+  Calendar, 
+  LogOut, 
+  Shield, 
+  TrendingUp, 
+  UserPlus 
+} from 'lucide-react';
 import { db } from '../firebase';
 import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 import toast, { Toaster } from 'react-hot-toast';
@@ -93,7 +103,7 @@ const AdminDashboard = () => {
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center bg-gray-100 rounded-lg px-3 py-1.5 border border-gray-200">
-                <Lucide.Calendar className="h-4 w-4 text-gray-500 mr-2" />
+                <Calendar className="h-4 w-4 text-gray-500 mr-2" />
                 <input
                   type="date"
                   value={selectedDate}
@@ -102,7 +112,7 @@ const AdminDashboard = () => {
                 />
               </div>
               <button
-                onClick={handleLogout}
+                onClick={logout}
                 className="flex items-center text-gray-600 hover:text-gray-900 transition-colors border-l pl-4"
               >
                 <LogOut className="h-5 w-5 mr-2" />
@@ -351,7 +361,7 @@ const AdminDashboard = () => {
             </div>
 
             <div className="flex-1 overflow-y-auto">
-              {registeredStudents.length > 0 ? (
+              {registeredUsers.filter(u => u.role === 'student').length > 0 ? (
                 <table className="w-full">
                   <thead className="bg-gray-50 sticky top-0">
                     <tr>
